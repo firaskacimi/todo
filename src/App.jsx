@@ -4,7 +4,7 @@ import Main from "./component/Main";
 import Footer from "./component/Footer";
 import useTheme from "./hooks/useTheme";
 import useTodo from "./hooks/useTodo";
-import TodoProvider from "./providers/todoProvider";
+import TodoProvider from "./providers/TodoProvider";
 
 export default function App() {
   const { theme } = useTheme();
