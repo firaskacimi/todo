@@ -10,8 +10,14 @@ export default function TodoProvider({ children }) {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (text) => {
-    setTodos([...todos, { id: Date.now(), text, completed: false }]);
+  const addTodo = async (text) => {
+    if (text.trim() === "") return; 
+    try {
+      const newTodo = await createTodos(text);
+      setTodos((prev) => [...prev, newTodo]);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const toggleComplete = (id) => {
@@ -32,7 +38,9 @@ export default function TodoProvider({ children }) {
     );
   };
   return (
-    <TodoContext.Provider value={{ deleteTodo, toggleComplete, addTodo, editTodo, todos}}>
+    <TodoContext.Provider
+      value={{ deleteTodo, toggleComplete, addTodo, editTodo, todos }}
+    >
       {children}
     </TodoContext.Provider>
   );
